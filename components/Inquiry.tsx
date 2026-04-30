@@ -48,10 +48,10 @@ const reveal = {
   viewport: { once: true, margin: "-15%" },
 };
 
-export default function Studio() {
+export default function Inquiry() {
   return (
     <section
-      id="studio"
+      id="inquiry"
       className="relative bg-canvas px-6 pt-20 sm:px-10 sm:pt-32 lg:px-16"
     >
       <div className="mx-auto max-w-gallery">
@@ -63,7 +63,7 @@ export default function Studio() {
         >
           <span>III.</span>
           <span className="block h-px w-12 bg-concrete-300" />
-          <span>The Studio</span>
+          <span>The Inquiry</span>
         </motion.div>
 
         {/* Title + subtitle */}
@@ -72,20 +72,20 @@ export default function Studio() {
           transition={{ duration: 1.1, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
           className="mt-8 font-serif text-5xl font-light leading-[1.05] text-ink sm:text-6xl lg:text-7xl"
         >
-          작업실
+          문의
         </motion.h1>
         <motion.p
           {...reveal}
           transition={{ duration: 1.0, delay: 0.2 }}
           className="mt-5 font-serif italic text-lg text-concrete-500 sm:text-xl"
         >
-          Where ideas become websites.
+          Where every project begins.
         </motion.p>
       </div>
 
       {/* Two-column body */}
       <div className="mx-auto mt-20 grid max-w-gallery grid-cols-1 gap-12 sm:mt-28 lg:grid-cols-12 lg:gap-16">
-        {/* Left: studio placeholder */}
+        {/* Left: inquiry placeholder — two chairs at a small table, the seat for a conversation */}
         <motion.figure
           {...reveal}
           transition={{ duration: 1.2, ease: [0.2, 0.8, 0.2, 1] }}
@@ -97,35 +97,42 @@ export default function Studio() {
             <div className="absolute inset-0 flex items-center justify-center text-concrete-100/40">
               <svg
                 viewBox="0 0 100 120"
-                className="h-1/2 w-auto"
+                className="h-3/5 w-auto"
                 fill="none"
                 stroke="currentColor"
               >
-                {/* Window frame */}
-                <rect x="22" y="20" width="56" height="60" strokeWidth="0.5" strokeOpacity="0.6" />
-                {/* Horizontal blind slats — light filtering through */}
-                <line x1="22" y1="32" x2="78" y2="32" strokeWidth="0.3" strokeOpacity="0.5" />
-                <line x1="22" y1="42" x2="78" y2="42" strokeWidth="0.3" strokeOpacity="0.5" />
-                <line x1="22" y1="52" x2="78" y2="52" strokeWidth="0.3" strokeOpacity="0.5" />
-                <line x1="22" y1="62" x2="78" y2="62" strokeWidth="0.3" strokeOpacity="0.5" />
-                <line x1="22" y1="72" x2="78" y2="72" strokeWidth="0.3" strokeOpacity="0.5" />
-                {/* Window divider */}
-                <line x1="50" y1="20" x2="50" y2="80" strokeWidth="0.4" strokeOpacity="0.5" />
-                {/* Sill */}
-                <line x1="18" y1="84" x2="82" y2="84" strokeWidth="0.7" />
+                {/* Soft horizontal beams — a calm, lit room */}
+                <line x1="14" y1="34" x2="86" y2="34" strokeWidth="0.3" strokeOpacity="0.3" />
+                <line x1="14" y1="48" x2="86" y2="48" strokeWidth="0.3" strokeOpacity="0.3" />
+                <line x1="14" y1="62" x2="86" y2="62" strokeWidth="0.3" strokeOpacity="0.3" />
+
                 {/* Floor line */}
-                <line x1="8" y1="104" x2="92" y2="104" strokeWidth="0.5" strokeOpacity="0.7" />
-                {/* Light pooling on floor */}
-                <line x1="32" y1="84" x2="22" y2="104" strokeWidth="0.3" strokeOpacity="0.3" />
-                <line x1="68" y1="84" x2="78" y2="104" strokeWidth="0.3" strokeOpacity="0.3" />
+                <line x1="6" y1="106" x2="94" y2="106" strokeWidth="0.6" />
+
+                {/* Left chair (side view, facing right) */}
+                <line x1="22" y1="72" x2="22" y2="92" strokeWidth="0.7" />
+                <line x1="22" y1="92" x2="36" y2="92" strokeWidth="0.7" />
+                <line x1="22" y1="92" x2="22" y2="106" strokeWidth="0.45" />
+                <line x1="36" y1="92" x2="36" y2="106" strokeWidth="0.45" />
+
+                {/* Right chair (mirrored, facing left) */}
+                <line x1="78" y1="72" x2="78" y2="92" strokeWidth="0.7" />
+                <line x1="78" y1="92" x2="64" y2="92" strokeWidth="0.7" />
+                <line x1="78" y1="92" x2="78" y2="106" strokeWidth="0.45" />
+                <line x1="64" y1="92" x2="64" y2="106" strokeWidth="0.45" />
+
+                {/* Small table between */}
+                <line x1="42" y1="90" x2="58" y2="90" strokeWidth="0.5" />
+                <line x1="44" y1="90" x2="44" y2="100" strokeWidth="0.3" />
+                <line x1="56" y1="90" x2="56" y2="100" strokeWidth="0.3" />
               </svg>
             </div>
             <figcaption className="absolute bottom-0 left-0 right-0 flex items-center justify-between border-t border-concrete-100/30 bg-concrete-900/30 px-4 py-3 backdrop-blur-sm">
               <span className="font-sans text-[9px] uppercase tracking-gallery text-concrete-50">
-                Studio, 2026
+                Conversation, 2026
               </span>
               <span className="font-serif italic text-[11px] text-concrete-100/80">
-                digital practice
+                open invitation
               </span>
             </figcaption>
           </div>
@@ -229,7 +236,7 @@ export default function Studio() {
                    href="https://instagram.com/yourhandle"
             */}
             <a
-              href="mailto:hello@projectyoon.com?subject=%5BStudio%5D%20%EB%AC%B8%EC%9D%98"
+              href="mailto:hello@projectyoon.com?subject=%5BInquiry%5D%20%EB%AC%B8%EC%9D%98"
               data-cursor="view"
               className="group inline-flex items-baseline gap-4 border-b border-ink/30 pb-3 font-serif text-3xl text-ink transition-colors hover:border-ink sm:text-4xl"
             >
