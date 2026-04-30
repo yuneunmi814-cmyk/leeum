@@ -93,7 +93,6 @@ export const works: Work[] = [
     images: [
       "/works/lumi-re/hero.jpg",
       "/works/lumi-re/detail-01.jpg",
-      "/works/lumi-re/detail-02.jpg",
     ],
     caption: "한 사람의 시간을 격으로 채우는 부티크 브랜드.",
     description:
