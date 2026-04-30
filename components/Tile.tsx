@@ -46,6 +46,7 @@ export default function Tile({ work, index }: { work: Work; index: number }) {
               if (imgSrc !== fallback) setImgSrc(fallback);
             }}
             className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: work.layout.objectPosition ?? "center" }}
             loading="lazy"
             decoding="async"
           />

@@ -19,9 +19,10 @@ export type WorkLayout = {
   /** col-span at md+ on the 12-column grid */
   span: 12 | 7 | 5 | 4;
   /**
-   * Tailwind aspect-ratio class suffix. The default `aspect-[1920/875]`
-   * matches the native dimensions of the supplied JPEG thumbnails so the
-   * tile shows the full image without object-cover cropping.
+   * Tailwind aspect-ratio class suffix. Wide source images get cropped
+   * to portrait shapes deliberately — the asymmetric portrait grid
+   * reads more like a curated wall than a screenshot strip. The crop
+   * focal point is set per work via `objectPosition` below.
    */
   aspect:
     | "aspect-[1920/875]"
@@ -30,9 +31,17 @@ export type WorkLayout = {
     | "aspect-square"
     | "aspect-[16/10]"
     | "aspect-[16/9]"
-    | "aspect-[5/6]";
+    | "aspect-[5/6]"
+    | "aspect-[2/3]";
   /** Optional vertical offset to break the row baseline (md+ only) */
   offset?: "md:mt-12" | "md:mt-20" | "md:mt-24" | "md:mt-32";
+  /**
+   * CSS object-position for the thumbnail crop. Defaults to "center"
+   * when omitted. Use this to choose which slice of a wide source image
+   * shows when the container is portrait — e.g. "30% center" shifts
+   * the visible window leftward to keep a logo or word-start in frame.
+   */
+  objectPosition?: string;
 };
 
 export type Work = {
@@ -86,7 +95,9 @@ export const works: Work[] = [
       github: "https://github.com/yuneunmi814-cmyk/leeum",
     },
     placeholder: { shape: "grid", palette: ["#E6EDF2", "#B8C9D6", "#5C7180"] },
-    layout: { span: 7, aspect: "aspect-[1920/875]" },
+    // Wider tile, near-square portrait. Center crop holds the radial
+    // oculus pattern + the centered "윤은미" name in frame.
+    layout: { span: 7, aspect: "aspect-[4/5]" },
   },
   {
     id: "lumi-re",
@@ -107,7 +118,16 @@ export const works: Work[] = [
       live: "https://lumi-re.projectyoon.com",
     },
     placeholder: { shape: "rose", palette: ["#FFE8C9", "#E5A582", "#5C5045"] },
-    layout: { span: 5, aspect: "aspect-[1920/875]", offset: "md:mt-24" },
+    // Narrower tile, taller portrait, baseline-broken with mt-24.
+    // 30% horizontal crop puts the LUMI-RE wordmark + the start of the
+    // serif "Antiaging" headline together — brand and typography in one
+    // composition.
+    layout: {
+      span: 5,
+      aspect: "aspect-[3/4]",
+      offset: "md:mt-24",
+      objectPosition: "30% center",
+    },
   },
 ];
 
