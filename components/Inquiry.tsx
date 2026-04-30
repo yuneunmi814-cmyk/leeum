@@ -227,31 +227,51 @@ export default function Inquiry() {
             </p>
           </div>
 
-          {/* CTA */}
-          <div className="mt-16">
-            {/*
-              The CTA opens the user's mail client. Swap to a KakaoTalk
-              open-chat URL or an Instagram DM link by changing href below.
-              e.g. href="https://open.kakao.com/o/abc123"
-                   href="https://instagram.com/yourhandle"
-            */}
+          {/* Reassurance line — sits above the primary CTA with a clear gap */}
+          <p className="mt-12 font-sans text-sm leading-relaxed text-concrete-500">
+            채팅창에 무엇이든 편하게 적어주세요. 답장은 보통 24시간 안에 드립니다.
+          </p>
+
+          {/* Primary CTA — KakaoTalk open chat. open.kakao.com/o/* deep-links
+              into the Kakao app on mobile; falls back to a web view otherwise.
+              Black plate + white serif, deliberately no Kakao yellow / logo. */}
+          <div className="mt-10 sm:mt-12">
             <a
-              href="mailto:hello@projectyoon.com?subject=%5BInquiry%5D%20%EB%AC%B8%EC%9D%98"
+              href="https://open.kakao.com/o/gUBbgRsi"
+              target="_blank"
+              rel="noopener noreferrer"
               data-cursor="view"
-              className="group inline-flex items-baseline gap-4 border-b border-ink/30 pb-3 font-serif text-3xl text-ink transition-colors hover:border-ink sm:text-4xl"
+              className="group inline-flex min-h-12 items-center gap-5 bg-ink px-10 py-5 text-canvas transition-[background-color,gap] duration-300 hover:bg-accent hover:gap-6 sm:px-12 sm:py-6"
             >
-              <span>Start a Conversation</span>
+              <span className="font-serif text-xl font-light tracking-tight sm:text-2xl">
+                Start a Conversation
+              </span>
               <span
                 aria-hidden
-                className="font-sans text-base tracking-gallery transition-transform group-hover:translate-x-1"
+                className="font-sans text-sm tracking-gallery transition-transform duration-300 group-hover:translate-x-1"
               >
                 ↗
               </span>
             </a>
-            <p className="mt-3 font-serif italic text-base text-concrete-500">
-              대화 시작하기
+            <p className="mt-4 font-serif italic text-base text-concrete-500">
+              카카오톡으로 편하게 말씀해 주세요
             </p>
           </div>
+
+          {/* Secondary contact — email, sits well below the primary CTA */}
+          <p className="mt-24 font-sans text-sm text-concrete-500">
+            또는 이메일도 좋아요{" "}
+            <span aria-hidden className="text-concrete-400">
+              →
+            </span>{" "}
+            <a
+              href="mailto:yuneunmi814@gmail.com"
+              data-cursor="view"
+              className="text-concrete-700 transition-colors duration-300 hover:text-ink"
+            >
+              yuneunmi814@gmail.com
+            </a>
+          </p>
         </motion.div>
       </div>
 
