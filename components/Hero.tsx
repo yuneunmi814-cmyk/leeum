@@ -31,7 +31,8 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-[100svh] min-h-[640px] w-full overflow-hidden"
+      id="entrance"
+      className="relative h-[100svh] min-h-[640px] w-full overflow-hidden scroll-mt-0"
       style={{
         backgroundColor: tone.ambient,
         transition: "background-color 1.6s ease",
@@ -110,7 +111,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Soft guide to /about — replaces the old scroll-indicator */}
+      {/* Scroll indicator — leads into the next chapter on the same page */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -119,21 +120,26 @@ export default function Hero() {
         style={{ color: tone.inkOnSky, transition: "color 1.6s ease" }}
       >
         <Link
-          href="/about"
+          href="#the-artist"
           data-cursor="view"
           className="group inline-flex items-baseline gap-3 font-sans text-[10px] uppercase tracking-gallery transition-opacity"
           style={{ opacity: 0.7 }}
         >
-          <span>About the Artist</span>
-          <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">
-            ↗
-          </span>
+          <motion.span
+            aria-hidden
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            className="inline-block"
+          >
+            ↓
+          </motion.span>
+          <span>Enter the Gallery</span>
         </Link>
         <div
           className="mt-2 font-serif italic text-[11px]"
           style={{ opacity: 0.55 }}
         >
-          작가 소개
+          전시회 입장
         </div>
       </motion.div>
 

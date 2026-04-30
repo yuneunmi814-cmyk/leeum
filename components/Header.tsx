@@ -4,14 +4,17 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useActiveChapter } from "./home/useActiveChapter";
 
 const links = [
-  { href: "/", label: "Intro" },
-  { href: "/about", label: "About" },
-  { href: "/works", label: "Works" },
-  { href: "/inquiry", label: "Inquiry" },
-  { href: "/guest", label: "Guest" },
+  { anchor: "entrance", href: "/", label: "Intro" },
+  { anchor: "the-artist", href: "/about", label: "About" },
+  { anchor: "collection", href: "/works", label: "Works" },
+  { anchor: "inquiry", href: "/inquiry", label: "Inquiry" },
+  { anchor: "guest-book", href: "/guest", label: "Guest" },
 ] as const;
+
+const ALL_ANCHORS = links.map((l) => l.anchor);
 
 export default function Header() {
   const { scrollYProgress } = useScroll();
@@ -30,12 +33,22 @@ export default function Header() {
   }, []);
 
   const pathname = usePathname();
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const onHome = pathname === "/";
+  // Only run the chapter tracker on the home page; on dedicated routes
+  // we fall back to pathname-based active state.
+  const activeChapter = useActiveChapter(onHome ? ALL_ANCHORS : []);
+
+  const isActive = (link: (typeof links)[number]) => {
+    if (onHome) return activeChapter === link.anchor;
+    return link.href === "/" ? false : pathname.startsWith(link.href);
+  };
+
+  // Hybrid target: same-page anchor on /, route+anchor elsewhere.
+  const targetFor = (link: (typeof links)[number]) =>
+    onHome ? `#${link.anchor}` : `/#${link.anchor}`;
 
   return (
     <>
-      {/* Scroll progress — a single hairline at the very top */}
       <motion.div
         className="fixed left-0 right-0 top-0 z-[60] h-px origin-left bg-ink"
         style={{ scaleX }}
@@ -51,7 +64,7 @@ export default function Header() {
       >
         <div className="mx-auto flex max-w-gallery items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-10 sm:py-5 lg:px-16">
           <Link
-            href="/"
+            href={onHome ? "#entrance" : "/"}
             data-cursor="view"
             className="group inline-flex shrink-0 items-center gap-2 sm:gap-3"
           >
@@ -70,11 +83,11 @@ export default function Header() {
           <nav aria-label="Sections" className="min-w-0">
             <ul className="flex items-center gap-3 sm:gap-6 lg:gap-9">
               {links.map((link) => {
-                const active = isActive(link.href);
+                const active = isActive(link);
                 return (
-                  <li key={link.href}>
+                  <li key={link.anchor}>
                     <Link
-                      href={link.href}
+                      href={targetFor(link)}
                       aria-current={active ? "page" : undefined}
                       className={`relative font-sans text-[10px] uppercase tracking-gallery transition-colors ${
                         active
@@ -83,7 +96,6 @@ export default function Header() {
                       }`}
                     >
                       {link.label}
-                      {/* Tiny underline marker for the active page */}
                       <span
                         aria-hidden
                         className={`pointer-events-none absolute -bottom-1.5 left-0 right-0 h-px origin-left bg-ink transition-transform duration-500 ${
