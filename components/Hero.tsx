@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Oculus from "./Oculus";
 import {
@@ -109,27 +110,32 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.a
-        href="#intro"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      {/* Soft guide to /about — replaces the old scroll-indicator */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.4, delay: 1.4 }}
-        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 font-sans text-[10px] uppercase tracking-gallery transition-opacity hover:opacity-100"
-        style={{
-          color: tone.inkOnSky,
-          opacity: 0.7,
-        }}
+        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-center"
+        style={{ color: tone.inkOnSky, transition: "color 1.6s ease" }}
       >
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="inline-block"
+        <Link
+          href="/about"
+          data-cursor="view"
+          className="group inline-flex items-baseline gap-3 font-sans text-[10px] uppercase tracking-gallery transition-opacity"
+          style={{ opacity: 0.7 }}
         >
-          ↓
-        </motion.span>
-        <span className="ml-3">Enter the Gallery</span>
-      </motion.a>
+          <span>About the Artist</span>
+          <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">
+            ↗
+          </span>
+        </Link>
+        <div
+          className="mt-2 font-serif italic text-[11px]"
+          style={{ opacity: 0.55 }}
+        >
+          작가 소개
+        </div>
+      </motion.div>
 
       {/* Bottom rule */}
       <div className="absolute bottom-0 left-0 right-0 h-px gallery-rule" aria-hidden />

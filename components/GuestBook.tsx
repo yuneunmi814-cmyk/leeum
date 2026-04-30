@@ -23,7 +23,7 @@ export default function GuestBook() {
           transition={{ duration: 0.9 }}
           className="flex items-center gap-4 text-[10px] uppercase tracking-gallery text-concrete-500"
         >
-          <span>III.</span>
+          <span>IV.</span>
           <span className="block h-px w-12 bg-concrete-300" />
           <span>Guest Book</span>
         </motion.div>
