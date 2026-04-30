@@ -69,7 +69,7 @@ export default function Intro() {
 
           <div className="mt-4 flex items-baseline justify-between text-[10px] uppercase tracking-gallery text-concrete-500">
             <span>Plate I</span>
-            <span>이윤미 / Lee Yun-mi</span>
+            <span>윤은미 / Yoon Eun-mi</span>
           </div>
         </motion.figure>
 

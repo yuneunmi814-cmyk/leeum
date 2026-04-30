@@ -8,11 +8,17 @@ import {
   useTransform,
 } from "framer-motion";
 import { useEffect, useMemo } from "react";
+import { DEFAULT_TONE, type SkyTone } from "@/lib/skyTone";
 
 type OculusProps = {
   segments?: number;
   rings?: number;
+  /** Time-of-day driven palette. Defaults to the daylight tone. */
+  tone?: SkyTone;
 };
+
+/** Smooth all stop-color / fill transitions when the tone changes. */
+const TONE_TRANSITION = { transition: "stop-color 1.6s ease, fill 1.6s ease" };
 
 /**
  * Mario Botta's M1 oculus — a top-down view of the rotunda's skylight.
@@ -32,7 +38,11 @@ type OculusProps = {
  *  12. Drifting dust motes (8 particles, infinite gentle vertical drift)
  *  13. Inscription       (a thin gallery label, micro-typography)
  */
-export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
+export default function Oculus({
+  segments = 24,
+  rings = 5,
+  tone = DEFAULT_TONE,
+}: OculusProps) {
   const reduceMotion = useReducedMotion();
 
   // Mouse-driven parallax (clamped, spring-damped)
@@ -163,41 +173,56 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
         }}
       >
         <defs>
-          {/* The sky pouring through */}
+          {/* The sky pouring through — driven by current time-of-day */}
           <radialGradient id="oc-sky" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#F4F7F9" />
-            <stop offset="20%" stopColor="#DCE5EC" />
-            <stop offset="46%" stopColor="#B8C9D6" />
-            <stop offset="74%" stopColor="#8AA2B5" />
-            <stop offset="100%" stopColor="#5C7180" />
+            <stop offset="0%" stopColor={tone.sky[0]} style={TONE_TRANSITION} />
+            <stop offset="20%" stopColor={tone.sky[1]} style={TONE_TRANSITION} />
+            <stop offset="46%" stopColor={tone.sky[2]} style={TONE_TRANSITION} />
+            <stop offset="74%" stopColor={tone.sky[3]} style={TONE_TRANSITION} />
+            <stop offset="100%" stopColor={tone.sky[4]} style={TONE_TRANSITION} />
           </radialGradient>
 
           {/* A whisper of canvas at the rim — atmosphere */}
           <radialGradient id="oc-haze" cx="50%" cy="50%" r="50%">
-            <stop offset="62%" stopColor="#FAFAF7" stopOpacity="0" />
-            <stop offset="94%" stopColor="#FAFAF7" stopOpacity="0.20" />
-            <stop offset="100%" stopColor="#FAFAF7" stopOpacity="0" />
+            <stop offset="62%" stopColor={tone.ambient} stopOpacity="0" />
+            <stop
+              offset="94%"
+              stopColor={tone.ambient}
+              stopOpacity={tone.hazeOpacity}
+              style={{ transition: "stop-opacity 1.6s ease, stop-color 1.6s ease" }}
+            />
+            <stop offset="100%" stopColor={tone.ambient} stopOpacity="0" />
           </radialGradient>
 
           {/* The concrete corner shadow */}
           <radialGradient id="oc-rim-shadow" cx="50%" cy="42%" r="62%">
-            <stop offset="62%" stopColor="#373531" stopOpacity="0" />
-            <stop offset="82%" stopColor="#2C2C2C" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#1A1A1A" stopOpacity="0.92" />
+            <stop offset="62%" stopColor={tone.rimShadow} stopOpacity="0" />
+            <stop
+              offset="82%"
+              stopColor={tone.rimShadow}
+              stopOpacity="0.55"
+              style={TONE_TRANSITION}
+            />
+            <stop
+              offset="100%"
+              stopColor={tone.rimShadow}
+              stopOpacity="0.92"
+              style={TONE_TRANSITION}
+            />
           </radialGradient>
 
-          {/* Cursor-following beam */}
+          {/* Cursor-following beam — color drifts with time-of-day */}
           <radialGradient id="oc-beam" cx="50%" cy="50%" r="48%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-            <stop offset="40%" stopColor="#F1F5F8" stopOpacity="0.28" />
-            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+            <stop offset="0%" stopColor={tone.beam} stopOpacity="0.9" style={TONE_TRANSITION} />
+            <stop offset="40%" stopColor={tone.beam} stopOpacity="0.28" style={TONE_TRANSITION} />
+            <stop offset="100%" stopColor={tone.beam} stopOpacity="0" style={TONE_TRANSITION} />
           </radialGradient>
 
           {/* Center keystone glaze */}
           <radialGradient id="oc-keystone" cx="50%" cy="44%" r="50%">
-            <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="60%" stopColor="#F1F5F8" />
-            <stop offset="100%" stopColor="#DCE5EC" />
+            <stop offset="0%" stopColor={tone.keystone[0]} style={TONE_TRANSITION} />
+            <stop offset="60%" stopColor={tone.keystone[1]} style={TONE_TRANSITION} />
+            <stop offset="100%" stopColor={tone.keystone[2]} style={TONE_TRANSITION} />
           </radialGradient>
 
           {/* Soft global vignette */}
@@ -237,7 +262,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
             animate={reduceMotion ? undefined : { rotate: 360 }}
             transition={{ duration: 240, repeat: Infinity, ease: "linear" }}
           >
-            <g stroke="#1A1A1A" strokeOpacity="0.09">
+            <g stroke={tone.inkOnSky} strokeOpacity="0.09">
               {Array.from({ length: 96 }).map((_, i) => {
                 const a = (i / 96) * Math.PI * 2;
                 return (
@@ -258,7 +283,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
               cx="0"
               cy="0"
               fill="none"
-              stroke="#1A1A1A"
+              stroke={tone.inkOnSky}
               strokeOpacity="0.18"
               strokeWidth="0.6"
               strokeDasharray="2 8"
@@ -267,7 +292,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
         </g>
 
         {/* 5. Spokes — three weights */}
-        <g stroke="#1A1A1A">
+        <g stroke={tone.inkOnSky}>
           {spokes.map((s, i) => (
             <line
               key={i}
@@ -282,7 +307,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
         </g>
 
         {/* 6. Concentric rings */}
-        <g fill="none" stroke="#1A1A1A">
+        <g fill="none" stroke={tone.inkOnSky}>
           {ringRadii.map((r, i) => (
             <circle
               key={i}
@@ -296,7 +321,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
         </g>
 
         {/* 7. Rivets */}
-        <g fill="#1A1A1A" fillOpacity="0.55">
+        <g fill={tone.inkOnSky} fillOpacity="0.55">
           {rivets.map((rv, i) => (
             <circle key={i} cx={rv.x} cy={rv.y} r={rv.r} />
           ))}
@@ -305,7 +330,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
         {/* 8. Rose keystone */}
         <g>
           <circle cx="500" cy="500" r="46" fill="url(#oc-keystone)" />
-          <g stroke="#1A1A1A" strokeOpacity="0.45" strokeWidth="0.55">
+          <g stroke={tone.inkOnSky} strokeOpacity="0.45" strokeWidth="0.55">
             {rose.map((p, i) => (
               <line key={i} x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} />
             ))}
@@ -315,7 +340,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
             cy="500"
             r="38"
             fill="none"
-            stroke="#1A1A1A"
+            stroke={tone.inkOnSky}
             strokeOpacity="0.6"
             strokeWidth="0.7"
           />
@@ -324,7 +349,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
             cy="500"
             r="14"
             fill="none"
-            stroke="#1A1A1A"
+            stroke={tone.inkOnSky}
             strokeOpacity="0.5"
             strokeWidth="0.6"
           />
@@ -333,7 +358,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
             cx="500"
             cy="500"
             r="6"
-            fill="#FFFFFF"
+            fill={tone.beam}
             animate={
               reduceMotion
                 ? undefined
@@ -349,7 +374,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
           cy="500"
           r="460"
           fill="none"
-          stroke="#1A1A1A"
+          stroke={tone.inkOnSky}
           strokeOpacity="0.95"
           strokeWidth="2.6"
         />
@@ -358,7 +383,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
           cy="500"
           r="478"
           fill="none"
-          stroke="#1A1A1A"
+          stroke={tone.inkOnSky}
           strokeOpacity="0.18"
           strokeWidth="14"
         />
@@ -393,7 +418,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
               cx={m.cx}
               cy={m.cy}
               r={m.size}
-              fill="#FFFFFF"
+              fill={tone.beam}
               animate={
                 reduceMotion
                   ? undefined
@@ -414,7 +439,7 @@ export default function Oculus({ segments = 24, rings = 5 }: OculusProps) {
 
         {/* 13. Inscription — a faint gallery label around the rim */}
         <text
-          fill="#1A1A1A"
+          fill={tone.inkOnSky}
           fillOpacity="0.32"
           fontSize="11"
           letterSpacing="6"
