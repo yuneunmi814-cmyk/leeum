@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# Oculus — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+리움미술관 M1관 로툰다 천창(오쿨러스, 마리오 보타 설계)을 모티브로 한
+포트폴리오 사이트.
 
-Currently, two official plugins are available:
+- **Stack** — Next.js 14 (App Router) · TypeScript · Tailwind 3.4 · Framer Motion 11
+- **Fonts** — Noto Serif KR · Inter · Cormorant Garamond
+- **Deploy** — Cloudflare Pages (`@cloudflare/next-on-pages`)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local development
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deployment — Cloudflare Pages
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The site ships through `@cloudflare/next-on-pages`, which compiles the
+Next.js build into a Pages-compatible output at `.vercel/output/static`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Required compatibility flag
+
+Cloudflare Pages needs the `nodejs_compat` flag enabled. It is declared
+in [`wrangler.toml`](./wrangler.toml):
+
+```toml
+name = "leeum"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+```
+
+If the flag is missing, the build fails with a *Node.js Compatibility Error*.
+
+### Scripts
+
+```bash
+npm run pages:build  # build for Cloudflare Pages (.vercel/output/static)
+npm run preview      # build + run wrangler pages dev locally
+npm run deploy       # build + wrangler pages deploy
+```
+
+`wrangler` and `@cloudflare/next-on-pages` are pulled in via `npx` /
+`wrangler` CLI; install wrangler globally (`npm i -g wrangler`) or as a
+dev dependency to run `preview` / `deploy`.
+
+### Cloudflare dashboard setup
+
+When connecting the repo from the Cloudflare Pages UI:
+
+| Field | Value |
+| --- | --- |
+| Build command | `npm run pages:build` |
+| Build output directory | `.vercel/output/static` |
+| Compatibility flags (Production & Preview) | `nodejs_compat` |
+| Compatibility date | `2024-09-23` |
+
+## Project layout
+
+```
+app/
+  layout.tsx               root layout, fonts, Header, ViewCursor
+  page.tsx                 Hero · Intro · Works · GuestBook
+  globals.css              tokens + utilities
+  works/[slug]/            statically generated detail pages
+components/
+  Oculus.tsx               13-layer SVG skylight (the centerpiece)
+  Hero.tsx · Intro.tsx
+  Works.tsx                asymmetric 12-col gallery grid
+  PlaceholderArt.tsx       7 generative shape variants
+  Header.tsx               sticky header + scroll progress bar
+  ViewCursor.tsx           custom "VIEW" cursor
+  GuestBook.tsx            "OPEN 24/7 · ONLINE" contact plaque
+data/
+  works.ts                 single source of truth for the gallery
+tailwind.config.ts         design tokens (canvas / ink / concrete / oculus)
+wrangler.toml              Cloudflare Pages config
 ```
