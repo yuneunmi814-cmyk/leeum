@@ -18,8 +18,13 @@ export type WorkShape =
 export type WorkLayout = {
   /** col-span at md+ on the 12-column grid */
   span: 12 | 7 | 5 | 4;
-  /** Tailwind aspect-ratio class suffix */
+  /**
+   * Tailwind aspect-ratio class suffix. The default `aspect-[1920/875]`
+   * matches the native dimensions of the supplied JPEG thumbnails so the
+   * tile shows the full image without object-cover cropping.
+   */
   aspect:
+    | "aspect-[1920/875]"
     | "aspect-[4/5]"
     | "aspect-[3/4]"
     | "aspect-square"
@@ -81,7 +86,7 @@ export const works: Work[] = [
       github: "https://github.com/yuneunmi814-cmyk/leeum",
     },
     placeholder: { shape: "grid", palette: ["#E6EDF2", "#B8C9D6", "#5C7180"] },
-    layout: { span: 7, aspect: "aspect-[4/5]" },
+    layout: { span: 7, aspect: "aspect-[1920/875]" },
   },
   {
     id: "lumi-re",
@@ -102,7 +107,7 @@ export const works: Work[] = [
       live: "https://lumi-re.projectyoon.com",
     },
     placeholder: { shape: "rose", palette: ["#FFE8C9", "#E5A582", "#5C5045"] },
-    layout: { span: 5, aspect: "aspect-[3/4]", offset: "md:mt-24" },
+    layout: { span: 5, aspect: "aspect-[1920/875]", offset: "md:mt-24" },
   },
 ];
 

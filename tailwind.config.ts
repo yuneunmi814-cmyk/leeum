@@ -9,7 +9,11 @@ import type { Config } from "tailwindcss";
  *  accent    #2C2C2C   labels, rules, deep emphasis
  */
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./data/**/*.{ts,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
