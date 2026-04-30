@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #fafaf7;
+  --ink: #1a1a1a;
+  --accent: #2c2c2c;
+  --concrete: #8b8680;
+  --concrete-line: #e2e0d9;
+  --oculus: #b8c9d6;
+}
+
+html,
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gallery-rule {
+    background-image: linear-gradient(
+      to right,
+      transparent 0,
+      var(--concrete-line) 12%,
+      var(--concrete-line) 88%,
+      transparent 100%
+    );
+  }
+
+  .vignette-light {
+    background:
+      radial-gradient(ellipse at top, rgba(184, 201, 214, 0.45), transparent 55%),
+      radial-gradient(ellipse at bottom, rgba(26, 26, 26, 0.05), transparent 70%);
+  }
+}
+
+/* Hide native cursor over view-cursor targets — hover-capable devices only */
+@media (hover: hover) {
+  [data-cursor="view"],
+  [data-cursor="view"] * {
+    cursor: none;
+  }
+}
+
+/* Subtle paper grain — concrete wall feel */
+.concrete-grain {
+  background-image:
+    radial-gradient(rgba(26, 26, 26, 0.035) 1px, transparent 1px),
+    radial-gradient(rgba(26, 26, 26, 0.025) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1px 2px;
+}
