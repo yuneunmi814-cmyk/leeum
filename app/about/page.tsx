@@ -3,8 +3,13 @@ import Link from "next/link";
 import Intro from "@/components/Intro";
 
 export const metadata: Metadata = {
-  title: "About — Oculus",
-  description: "윤은미 — 작가 노트, 그리고 이 공간에 대한 짧은 설명.",
+  title: "The Artist",
+  description:
+    "이 공간은 한 사람의 시선이 머무른 자리입니다. 윤은미 — 작가 노트, 그리고 이 공간에 대한 짧은 설명.",
+  openGraph: {
+    title: "The Artist · Project Yoon",
+    description: "한 사람의 시선이 머무른 자리.",
+  },
 };
 
 export default function AboutPage() {

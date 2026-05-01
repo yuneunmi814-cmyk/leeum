@@ -3,9 +3,13 @@ import Link from "next/link";
 import GuestBook from "@/components/GuestBook";
 
 export const metadata: Metadata = {
-  title: "Guest Book — Oculus",
+  title: "Guest Book",
   description:
-    "방명록 · 이 전시를 다녀가신 분들의 한 마디. 당신의 발자국도 더해주세요.",
+    "Voices from the gallery — 이 전시를 다녀가신 분들의 한 마디. 당신의 발자국도 더해주세요.",
+  openGraph: {
+    title: "Guest Book · Project Yoon",
+    description: "Voices from the gallery.",
+  },
 };
 
 const channels: Array<{ label: string; value: string; href: string }> = [
