@@ -17,8 +17,8 @@ const contact: Array<{ label: string; value: string; href: string }> = [
 const elsewhere: Array<{ label: string; value: string; href: string }> = [
   {
     label: "Instagram",
-    value: "@projectyoon",
-    href: "https://instagram.com/projectyoon",
+    value: "@projectyoon.studio",
+    href: "https://instagram.com/projectyoon.studio",
   },
   {
     label: "GitHub",
