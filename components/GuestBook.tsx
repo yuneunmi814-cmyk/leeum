@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 type Entry = {
@@ -13,7 +14,10 @@ type Entry = {
 
 const NICKNAME_MAX = 20;
 const MESSAGE_MAX = 100;
-const VISIBLE_DEFAULT = 15;
+const VISIBLE_FULL = 15;
+const VISIBLE_PREVIEW = 3;
+
+type Variant = "full" | "preview";
 
 /** "03:42 PM, 2026.04.30" — Korean catalogue style. */
 function formatStamp(iso: string): string {
@@ -28,7 +32,23 @@ function formatStamp(iso: string): string {
   return `${h12}:${m} ${ampm}, ${yyyy}.${mm}.${dd}`;
 }
 
-export default function GuestBook() {
+/**
+ * The guest book — same component on both pages.
+ *
+ *   variant="full"    /guest  — 15 visible, "이전 발자국 보기 ↓" toggle
+ *   variant="preview" /       — 3 visible,  "전체 방명록 ↗" link to /guest
+ *
+ * Each mount fetches /api/guestbook on its own; cross-page sync happens
+ * naturally on the next page load (KV is the source of truth).
+ */
+export default function GuestBook({
+  variant = "full",
+}: {
+  variant?: Variant;
+}) {
+  const initialVisible =
+    variant === "preview" ? VISIBLE_PREVIEW : VISIBLE_FULL;
+
   const [entries, setEntries] = useState<Entry[] | null>(null);
   const [showAll, setShowAll] = useState(false);
 
@@ -119,8 +139,8 @@ export default function GuestBook() {
   }
 
   const visible = entries ?? [];
-  const displayed = showAll ? visible : visible.slice(0, VISIBLE_DEFAULT);
-  const hasMore = visible.length > VISIBLE_DEFAULT;
+  const displayed = showAll ? visible : visible.slice(0, initialVisible);
+  const hasMore = visible.length > initialVisible;
 
   return (
     <div>
@@ -243,7 +263,24 @@ export default function GuestBook() {
             </ul>
           )}
 
-          {hasMore && !showAll && (
+          {/* "More" affordance differs by variant:
+                preview → link to /guest (deep-view), always visible
+                          once entries have loaded;
+                full    → in-place toggle to expand, only when there
+                          are entries past the initial visible window. */}
+          {variant === "preview" && entries !== null && (
+            <Link
+              href="/guest"
+              data-cursor="view"
+              className="group mx-auto mt-12 flex w-fit items-center gap-3 font-sans text-[10px] uppercase tracking-gallery text-concrete-500 transition-colors hover:text-ink"
+            >
+              <span aria-hidden className="block h-px w-8 bg-concrete-300 transition-colors group-hover:bg-ink" />
+              <span>전체 방명록 보기</span>
+              <span aria-hidden>↗</span>
+              <span aria-hidden className="block h-px w-8 bg-concrete-300 transition-colors group-hover:bg-ink" />
+            </Link>
+          )}
+          {variant === "full" && hasMore && !showAll && (
             <button
               type="button"
               onClick={() => setShowAll(true)}
