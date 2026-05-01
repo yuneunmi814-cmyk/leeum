@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Project Yoon",
     description: "코드로 지어 올린 디지털 갤러리.",
-    creator: "@projectyoon",
+    creator: "@projectyoon.studio",
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "https://projectyoon.com" },
