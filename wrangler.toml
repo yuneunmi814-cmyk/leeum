@@ -2,16 +2,3 @@ name = "leeum"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
-
-# KV — guest book entries, rate-limit timestamps, total visitor counter
-[[kv_namespaces]]
-binding = "GUESTBOOK"
-id = "cba04f42764d4b669a7d187b4b0582fb"
-
-[[env.production.kv_namespaces]]
-binding = "GUESTBOOK"
-id = "cba04f42764d4b669a7d187b4b0582fb"
-
-[[env.preview.kv_namespaces]]
-binding = "GUESTBOOK"
-id = "cba04f42764d4b669a7d187b4b0582fb"

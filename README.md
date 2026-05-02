@@ -61,7 +61,7 @@ When connecting the repo from the Cloudflare Pages UI:
 ```
 app/
   layout.tsx               root layout, fonts, Header, ViewCursor
-  page.tsx                 Hero · Intro · Works · GuestBook
+  page.tsx                 Hero · Collection · Inquiry
   globals.css              tokens + utilities
   works/[slug]/            statically generated detail pages
 components/
@@ -71,7 +71,6 @@ components/
   PlaceholderArt.tsx       7 generative shape variants
   Header.tsx               sticky header + scroll progress bar
   ViewCursor.tsx           custom "VIEW" cursor
-  GuestBook.tsx            "OPEN 24/7 · ONLINE" contact plaque
 data/
   works.ts                 single source of truth for the gallery
 tailwind.config.ts         design tokens (canvas / ink / concrete / oculus)

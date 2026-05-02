@@ -11,7 +11,6 @@ const links = [
   { anchor: "about", href: "/about", label: "About" },
   { anchor: "collection", href: "/works", label: "Works" },
   { anchor: "inquiry", href: "/inquiry", label: "Inquiry" },
-  { anchor: "guest", href: "/guest", label: "Guest" },
 ] as const;
 
 // Anchors that actually live on the home page after the 3-chapter cut.

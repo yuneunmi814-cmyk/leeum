@@ -7,8 +7,7 @@ import InquiryChapter from "@/components/home/InquiryChapter";
 /**
  * Home is a single-scroll exhibition: three chapters with corridors
  * between them — Entrance (skylight), the Collection (horizontal
- * gallery), and the Inquiry. /about and /guest live as their own
- * dedicated pages, not as chapters here.
+ * gallery), and the Inquiry. /about lives as its own dedicated page.
  */
 export default function Home() {
   return (
