@@ -40,6 +40,14 @@ body {
     text-wrap: balance;
   }
 
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .gallery-rule {
     background-image: linear-gradient(
       to right,
