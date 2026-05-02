@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Serif_KR, Cormorant_Garamond } from "next/font/google";
+import FloatingInquiry from "@/components/FloatingInquiry";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ViewCursor from "@/components/ViewCursor";
@@ -84,6 +85,7 @@ export default function RootLayout({
         <ViewCursor />
         {children}
         <Footer />
+        <FloatingInquiry />
       </body>
     </html>
   );
