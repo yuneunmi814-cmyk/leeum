@@ -185,7 +185,7 @@ export const works: Work[] = [
     medium: "iOS App · UX/UI Design · AI",
     thumbnail: "/works/nyangtalk/thumb.jpg",
     images: [
-      "/works/nyangtalk/01.jpg",
+      "/works/nyangtalk/thumb.jpg",
       "/works/nyangtalk/02.jpg",
       "/works/nyangtalk/03.jpg",
       "/works/nyangtalk/04.jpg",
@@ -205,7 +205,7 @@ export const works: Work[] = [
     ],
     toneStudy: {
       beforeImage: "/works/nyangtalk/before.jpg",
-      afterImage: "/works/nyangtalk/01.jpg",
+      afterImage: "/works/nyangtalk/thumb.jpg",
       beforeLabel: "Before · 블루 톤 (초기 시안)",
       afterLabel: "After · 웜 베이지 / 오렌지 톤 (최종)",
       story:
