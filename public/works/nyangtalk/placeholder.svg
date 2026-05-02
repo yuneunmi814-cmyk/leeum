@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" preserveAspectRatio="xMidYMid slice">
+  <rect width="1200" height="1500" fill="#FAFAF7"/>
+  <line x1="120" y1="200" x2="280" y2="200" stroke="#1A1A1A" stroke-width="1"/>
+  <text x="120" y="240" font-family="Inter, system-ui, sans-serif" font-size="13" letter-spacing="3" fill="#8B8680">PLATE 01 · 2026</text>
+  <text x="600" y="780" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-weight="300" fill="#1A1A1A" letter-spacing="2">오쿨러스</text>
+  <text x="600" y="850" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="48" font-weight="300" fill="#8B8680">Oculus</text>
+  <text x="120" y="1380" font-family="Inter, system-ui, sans-serif" font-size="11" letter-spacing="3" fill="#8B8680">YOON EUN-MI</text>
+  <text x="1080" y="1380" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="11" letter-spacing="3" fill="#8B8680">PLACEHOLDER</text>
+</svg>

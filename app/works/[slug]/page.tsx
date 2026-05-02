@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getNeighbors, works, worksById } from "@/data/works";
 import PlaceholderArt from "@/components/PlaceholderArt";
 import DetailReveal from "./DetailReveal";
+import ResilientImage from "./ResilientImage";
 
 export function generateStaticParams() {
   return works.map((w) => ({ slug: w.id }));
@@ -27,6 +28,15 @@ export default function WorkDetailPage({
 
   const neighbors = getNeighbors(work.id)!;
   const { prev, next } = neighbors;
+  const plateNumber = String(works.findIndex((w) => w.id === work.id) + 1).padStart(2, "0");
+  const placeholder = (
+    <div className="absolute inset-0">
+      <PlaceholderArt
+        shape={work.placeholder.shape}
+        palette={work.placeholder.palette}
+      />
+    </div>
+  );
 
   return (
     <main className="relative bg-canvas pb-32">
@@ -57,7 +67,7 @@ export default function WorkDetailPage({
                   Plate
                 </span>
                 <div className="mt-2 font-serif text-5xl text-ink/30 leading-none lg:text-6xl">
-                  {String(works.findIndex((w) => w.id === work.id) + 1).padStart(2, "0")}
+                  {plateNumber}
                 </div>
               </div>
               <div className="lg:col-span-9">
@@ -67,15 +77,23 @@ export default function WorkDetailPage({
                 <p className="mt-3 font-serif italic text-xl text-concrete-500 lg:text-2xl">
                   {work.title}
                 </p>
+                {work.subtitle && (
+                  <p className="mt-6 max-w-2xl font-serif text-base leading-[1.85] text-concrete-700 text-balance sm:text-lg">
+                    {work.subtitle}
+                  </p>
+                )}
               </div>
             </div>
 
             {/* The hero image */}
             <figure className="mt-16 lg:mt-24">
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-concrete-200">
-                <PlaceholderArt
-                  shape={work.placeholder.shape}
-                  palette={work.placeholder.palette}
+                <ResilientImage
+                  src={work.thumbnail}
+                  alt={`${work.titleKo} — hero plate`}
+                  fallback={placeholder}
+                  className="absolute inset-0 h-full w-full"
+                  objectPosition={work.layout.objectPosition}
                 />
                 <div
                   className="absolute inset-0 concrete-grain opacity-25 mix-blend-multiply"
@@ -87,7 +105,7 @@ export default function WorkDetailPage({
                 />
               </div>
               <figcaption className="mt-4 flex items-baseline justify-between font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
-                <span>Plate {String(works.findIndex((w) => w.id === work.id) + 1).padStart(2, "0")}</span>
+                <span>Plate {plateNumber}</span>
                 <span>{work.medium}</span>
               </figcaption>
             </figure>
@@ -111,6 +129,26 @@ export default function WorkDetailPage({
                   {para}
                 </p>
               ))}
+
+              {work.highlights && work.highlights.length > 0 && (
+                <div className="mt-12 border-t border-concrete-200 pt-8">
+                  <span className="font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
+                    Highlights
+                  </span>
+                  <ol className="mt-6 space-y-5">
+                    {work.highlights.map((line, i) => (
+                      <li key={i} className="flex gap-5">
+                        <span className="mt-1 shrink-0 font-sans text-[10px] uppercase tracking-gallery text-concrete-400">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="font-serif text-base leading-[1.8] text-concrete-800 text-balance sm:text-lg">
+                          {line}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
             </div>
 
             <aside className="lg:col-span-4 lg:col-start-9">
@@ -147,7 +185,65 @@ export default function WorkDetailPage({
           </div>
         </section>
 
-        {/* Additional plates — stand-ins for the images[] gallery */}
+        {/* Tone Study — Before / After design decision */}
+        {work.toneStudy && (
+          <section className="px-6 pt-24 sm:px-10 lg:px-16 lg:pt-40">
+            <div className="mx-auto max-w-gallery">
+              <div className="flex items-center gap-4 font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
+                <span>Tone Study</span>
+                <span aria-hidden className="block h-px w-12 bg-concrete-300" />
+                <span>Design Decision</span>
+              </div>
+              <h2 className="mt-6 font-serif text-3xl font-light leading-[1.1] tracking-tight text-ink sm:text-4xl lg:text-5xl">
+                같은 기능, 다른 온도
+                <span className="text-concrete-300">.</span>
+              </h2>
+
+              <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-12">
+                <figure>
+                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-concrete-200">
+                    <ResilientImage
+                      src={work.toneStudy.beforeImage}
+                      alt={`${work.titleKo} — before`}
+                      fallback={placeholder}
+                      className="absolute inset-0 h-full w-full"
+                    />
+                    <div
+                      className="absolute inset-0 concrete-grain opacity-25 mix-blend-multiply"
+                      aria-hidden
+                    />
+                  </div>
+                  <figcaption className="mt-3 font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
+                    {work.toneStudy.beforeLabel}
+                  </figcaption>
+                </figure>
+                <figure>
+                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-concrete-200">
+                    <ResilientImage
+                      src={work.toneStudy.afterImage}
+                      alt={`${work.titleKo} — after`}
+                      fallback={placeholder}
+                      className="absolute inset-0 h-full w-full"
+                    />
+                    <div
+                      className="absolute inset-0 concrete-grain opacity-25 mix-blend-multiply"
+                      aria-hidden
+                    />
+                  </div>
+                  <figcaption className="mt-3 font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
+                    {work.toneStudy.afterLabel}
+                  </figcaption>
+                </figure>
+              </div>
+
+              <p className="mt-12 max-w-3xl font-serif text-base leading-[1.85] text-concrete-800 text-balance sm:text-lg">
+                {work.toneStudy.story}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* Additional plates — gallery of detail images */}
         {work.images.length > 1 && (
           <section className="px-6 pt-24 sm:px-10 lg:px-16 lg:pt-40">
             <div className="mx-auto max-w-gallery">
@@ -155,12 +251,14 @@ export default function WorkDetailPage({
                 Additional Plates · {work.images.length}
               </span>
               <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-12">
-                {work.images.map((_, i) => (
-                  <figure key={i}>
+                {work.images.map((src, i) => (
+                  <figure key={src + i}>
                     <div className="relative aspect-[4/5] w-full overflow-hidden bg-concrete-200">
-                      <PlaceholderArt
-                        shape={work.placeholder.shape}
-                        palette={work.placeholder.palette}
+                      <ResilientImage
+                        src={src}
+                        alt={`${work.titleKo} — plate ${i + 1}`}
+                        fallback={placeholder}
+                        className="absolute inset-0 h-full w-full"
                       />
                       <div
                         className="absolute inset-0 concrete-grain opacity-25 mix-blend-multiply"

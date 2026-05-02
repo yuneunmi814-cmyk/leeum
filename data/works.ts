@@ -58,6 +58,21 @@ export type Work = {
   description: string;
   /** Short caption shown in the gallery grid */
   caption: string;
+  /** Optional longer subtitle rendered under the title on the detail page */
+  subtitle?: string;
+  /** Bulleted highlights surfaced on the detail page */
+  highlights?: string[];
+  /**
+   * Optional Before / After tone-study block rendered on the detail page.
+   * Used by NyangTalk to narrate the cool-blue → warm-beige redesign.
+   */
+  toneStudy?: {
+    beforeImage: string;
+    afterImage: string;
+    beforeLabel: string;
+    afterLabel: string;
+    story: string;
+  };
   tags: string[];
   links: Partial<{
     live: string;
@@ -160,6 +175,49 @@ export const works: Work[] = [
       span: 12,
       aspect: "aspect-[16/10]",
       offset: "md:mt-20",
+    },
+  },
+  {
+    id: "nyangtalk",
+    title: "NyangTalk",
+    titleKo: "냥톡",
+    year: "2026",
+    medium: "iOS App · UX/UI Design · AI",
+    thumbnail: "/works/nyangtalk/thumb.jpg",
+    images: [
+      "/works/nyangtalk/01.jpg",
+      "/works/nyangtalk/02.jpg",
+      "/works/nyangtalk/03.jpg",
+      "/works/nyangtalk/04.jpg",
+      "/works/nyangtalk/05.jpg",
+      "/works/nyangtalk/06.jpg",
+    ],
+    caption: "고양이의 마음을 읽는 시간.",
+    subtitle:
+      "고양이 울음소리를 녹음하면 AI가 감정과 의미를 해석해주는 반려묘 커뮤니케이션 앱.",
+    description:
+      "야옹 한 마디에 담긴 마음을 읽는다. 사용자가 고양이의 울음을 녹음하면 AI가 음성을 분석해 평소·녹음중·분석중·배고픔·관심·만족 — 여섯 가지 감정 상태로 풀어내고, 치즈냥이 캐릭터의 표정과 애니메이션으로 그 결과를 건넨다.\n\n분석 카드는 SNS로 공유할 수 있고, 데일리 알림과 커스텀 멘트가 일상의 결을 따라 흐른다. 차가운 음성 인식 기술 위에 반려동물과 보호자 사이의 따뜻한 대화 한 조각을 얹은 작업.",
+    highlights: [
+      "음성 녹음 → AI 분석 → 6가지 감정 상태 해석 (평소·녹음중·분석중·배고픔·관심·만족)",
+      "치즈냥이 캐릭터의 표정과 애니메이션으로 결과를 표현",
+      "분석 결과를 SNS 공유 카드로 저장·공유",
+      "데일리 알림과 커스텀 멘트로 일상 속 인터랙션 설계",
+    ],
+    toneStudy: {
+      beforeImage: "/works/nyangtalk/before.jpg",
+      afterImage: "/works/nyangtalk/01.jpg",
+      beforeLabel: "Before · 블루 톤 (초기 시안)",
+      afterLabel: "After · 웜 베이지 / 오렌지 톤 (최종)",
+      story:
+        "초기 시안은 음성 분석 앱이라는 기술 정체성에 충실한 블루 그라데이션이었다. 화면을 켤 때마다 차가운 인상이 먼저 닿았고, 반려묘를 향한 다정한 말 걸기라는 본래의 목적과는 거리가 있었다. 톤을 베이지와 오렌지의 웜 팔레트로 다시 짜고, 치즈냥이의 표정 톤도 함께 끌어올렸다. 차가운 기술감 → 반려동물 앱의 정서적 따뜻함. 같은 기능, 다른 온도.",
+    },
+    tags: ["ios", "app", "ai", "ux", "ui"],
+    links: {},
+    placeholder: { shape: "circle", palette: ["#FFE7CC", "#F2A66E", "#5A4736"] },
+    layout: {
+      span: 7,
+      aspect: "aspect-[3/4]",
+      offset: "md:mt-32",
     },
   },
 ];

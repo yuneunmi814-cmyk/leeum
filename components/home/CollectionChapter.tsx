@@ -37,7 +37,7 @@ export default function CollectionChapter() {
               빛이 머무는 공간
             </p>
             <p className="mt-10 max-w-xl font-serif text-base leading-[1.85] text-concrete-700 sm:text-lg">
-              세 개의 작품, 하나의 빛.
+              네 개의 작품, 하나의 빛.
             </p>
           </div>
         </div>
@@ -158,11 +158,11 @@ function Slider() {
 
 function SlideCard({ work, index }: { work: Work; index: number }) {
   const [imgSrc, setImgSrc] = useState(work.thumbnail);
-  // Per spec: Oculus → internal detail page; everything else (Lumi-re,
-  // Campus Pass, future external pieces) → live site in a new tab.
-  const isExternal = work.id !== "oculus";
+  // Works with a live URL open externally; the rest (Oculus, app pieces
+  // like NyangTalk) link to their internal detail page.
+  const isExternal = Boolean(work.links.live) && work.id !== "oculus";
   const href = isExternal
-    ? work.links.live ?? `/works/${work.id}`
+    ? (work.links.live as string)
     : `/works/${work.id}`;
   const roman = ROMAN[index] ?? `${index + 1}`;
 

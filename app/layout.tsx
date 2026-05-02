@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s · Project Yoon",
   },
   description:
-    "코드로 지어 올린 디지털 갤러리. 세 개의 작품, 하나의 빛. 윤은미의 큐레이션 컬렉션과 웹 디자인 작업실.",
+    "코드로 지어 올린 디지털 갤러리. 네 개의 작품, 하나의 빛. 윤은미의 큐레이션 컬렉션과 웹 디자인 작업실.",
   keywords: [
     "포트폴리오",
     "웹 디자인",
@@ -44,6 +44,8 @@ export const metadata: Metadata = {
     "Oculus",
     "Lumi-re",
     "Campus Pass",
+    "NyangTalk",
+    "냥톡",
   ],
   authors: [{ name: "윤은미", url: "https://projectyoon.com" }],
   creator: "윤은미",
@@ -51,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Project Yoon — 빛이 머무는 자리",
     description:
-      "코드로 지어 올린 디지털 갤러리. 세 개의 작품, 하나의 빛.",
+      "코드로 지어 올린 디지털 갤러리. 네 개의 작품, 하나의 빛.",
     url: "https://projectyoon.com",
     siteName: "Project Yoon",
     locale: "ko_KR",
