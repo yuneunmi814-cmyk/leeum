@@ -124,8 +124,46 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Business info — required disclosures, kept to city level */}
+      <div className="mx-auto mt-16 max-w-gallery border-t border-concrete-200 pt-8 sm:mt-20">
+        <div className="font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
+          Business Info
+        </div>
+        <address className="mt-5 font-serif text-[13px] not-italic leading-[1.85] text-concrete-700 sm:text-sm">
+          <div>
+            <span className="text-ink">프로젝트윤</span>{" "}
+            <span className="text-concrete-500">/ PROJECT YOON</span>
+          </div>
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+            <span>
+              대표 <span className="text-ink">윤은미</span>
+            </span>
+            <span aria-hidden className="text-concrete-400">
+              ·
+            </span>
+            <span>
+              사업자등록번호{" "}
+              <span className="text-ink">794-39-01481</span>
+            </span>
+          </div>
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+            <span>충청북도 제천시</span>
+            <span aria-hidden className="text-concrete-400">
+              ·
+            </span>
+            <a
+              href="mailto:yuneunmi814@gmail.com"
+              data-cursor="view"
+              className="text-ink underline-offset-4 transition-colors hover:underline"
+            >
+              yuneunmi814@gmail.com
+            </a>
+          </div>
+        </address>
+      </div>
+
       {/* Bottom rule */}
-      <div className="mx-auto mt-16 max-w-gallery border-t border-concrete-200 pt-6 sm:mt-20">
+      <div className="mx-auto mt-10 max-w-gallery border-t border-concrete-200 pt-6">
         <div className="flex flex-col gap-2 font-sans text-[10px] uppercase tracking-gallery text-concrete-500 sm:flex-row sm:items-center sm:justify-between">
           <span>
             Built with{" "}
