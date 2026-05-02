@@ -9,7 +9,7 @@ const contact: Array<{ label: string; value: string; href: string }> = [
   },
   {
     label: "Location",
-    value: "Wonju, Republic of Korea",
+    value: "Jecheon, Republic of Korea",
     href: "",
   },
 ];

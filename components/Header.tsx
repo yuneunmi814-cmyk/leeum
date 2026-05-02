@@ -8,13 +8,19 @@ import { useActiveChapter } from "./home/useActiveChapter";
 
 const links = [
   { anchor: "entrance", href: "/", label: "Intro" },
-  { anchor: "the-artist", href: "/about", label: "About" },
+  { anchor: "about", href: "/about", label: "About" },
   { anchor: "collection", href: "/works", label: "Works" },
   { anchor: "inquiry", href: "/inquiry", label: "Inquiry" },
-  { anchor: "guest-book", href: "/guest", label: "Guest" },
+  { anchor: "guest", href: "/guest", label: "Guest" },
 ] as const;
 
-const ALL_ANCHORS = links.map((l) => l.anchor);
+// Anchors that actually live on the home page after the 3-chapter cut.
+// About + Guest are dedicated routes only — their links always navigate
+// to the route, never to a #anchor on /.
+const HOME_ANCHORS = new Set(["entrance", "collection", "inquiry"]);
+const HOME_ANCHOR_LIST = links
+  .filter((l) => HOME_ANCHORS.has(l.anchor))
+  .map((l) => l.anchor);
 
 export default function Header() {
   const { scrollYProgress } = useScroll();
@@ -36,16 +42,23 @@ export default function Header() {
   const onHome = pathname === "/";
   // Only run the chapter tracker on the home page; on dedicated routes
   // we fall back to pathname-based active state.
-  const activeChapter = useActiveChapter(onHome ? ALL_ANCHORS : []);
+  const activeChapter = useActiveChapter(onHome ? HOME_ANCHOR_LIST : []);
 
   const isActive = (link: (typeof links)[number]) => {
+    // About + Guest never live on home — match by route only.
+    if (!HOME_ANCHORS.has(link.anchor)) {
+      return link.href !== "/" && pathname.startsWith(link.href);
+    }
     if (onHome) return activeChapter === link.anchor;
-    return link.href === "/" ? false : pathname.startsWith(link.href);
+    return false;
   };
 
-  // Hybrid target: same-page anchor on /, route+anchor elsewhere.
-  const targetFor = (link: (typeof links)[number]) =>
-    onHome ? `#${link.anchor}` : `/#${link.anchor}`;
+  // Home anchors get same-page or route+anchor links; About/Guest always
+  // navigate to their dedicated routes.
+  const targetFor = (link: (typeof links)[number]) => {
+    if (!HOME_ANCHORS.has(link.anchor)) return link.href;
+    return onHome ? `#${link.anchor}` : `/#${link.anchor}`;
+  };
 
   return (
     <>

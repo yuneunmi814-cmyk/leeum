@@ -17,8 +17,7 @@ export default function Intro() {
           transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
           className="flex items-center gap-4 text-[10px] uppercase tracking-gallery text-concrete-500"
         >
-          <span>I.</span>
-          <span className="block h-px w-12 bg-concrete-300" />
+          <span aria-hidden className="block h-px w-12 bg-concrete-300" />
           <span>The Artist</span>
         </motion.div>
 
@@ -101,7 +100,7 @@ export default function Intro() {
           <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-concrete-200 pt-8 font-sans text-xs sm:grid-cols-3">
             <div>
               <dt className="text-[10px] uppercase tracking-gallery text-concrete-500">Based in</dt>
-              <dd className="mt-2 text-concrete-900">Seoul, KR</dd>
+              <dd className="mt-2 text-concrete-900">Jecheon, KR</dd>
             </div>
             <div>
               <dt className="text-[10px] uppercase tracking-gallery text-concrete-500">Practice</dt>

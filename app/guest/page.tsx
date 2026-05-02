@@ -33,7 +33,6 @@ export default function GuestPage() {
         <div className="mx-auto max-w-gallery">
           {/* Chapter mark */}
           <div className="flex items-center gap-4 text-[10px] uppercase tracking-gallery text-concrete-500">
-            <span>IV.</span>
             <span aria-hidden className="block h-px w-12 bg-concrete-300" />
             <span>The Guest Book</span>
           </div>
@@ -115,7 +114,7 @@ export default function GuestPage() {
                     Location
                   </span>
                   <div className="mt-2 font-serif text-base text-ink">
-                    Seoul, Republic of Korea
+                    Jecheon, Republic of Korea
                   </div>
                   <div className="mt-1 font-sans text-[11px] tracking-wall text-concrete-500">
                     By appointment only

@@ -120,7 +120,7 @@ export default function Hero() {
         style={{ color: tone.inkOnSky, transition: "color 1.6s ease" }}
       >
         <Link
-          href="#the-artist"
+          href="#collection"
           data-cursor="view"
           className="group inline-flex items-baseline gap-3 font-sans text-[10px] uppercase tracking-gallery transition-opacity"
           style={{ opacity: 0.7 }}

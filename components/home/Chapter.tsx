@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
  *
  * - Section gets the anchor id so #foo links land here.
  * - scroll-mt-20 leaves room for the fixed header when jumping to anchors.
- * - The chapter mark ("II. — The Artist") fades in first, the body
+ * - The chapter mark ("II. — Collection 01") fades in first, the body
  *   slides up 120 ms later — that small delay is the docent's pause
  *   before the reveal.
  */

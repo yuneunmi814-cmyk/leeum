@@ -1,15 +1,14 @@
 import Hero from "@/components/Hero";
-import ArtistChapter from "@/components/home/ArtistChapter";
 import ChapterIndicator from "@/components/home/ChapterIndicator";
 import CollectionChapter from "@/components/home/CollectionChapter";
 import Corridor from "@/components/home/Corridor";
-import GuestChapter from "@/components/home/GuestChapter";
 import InquiryChapter from "@/components/home/InquiryChapter";
 
 /**
- * Home is a single-scroll exhibition: five chapters with corridors
- * (50vh / 30vh on mobile) between them. Each chapter is self-contained
- * but pairs with a dedicated /<route> for the full version.
+ * Home is a single-scroll exhibition: three chapters with corridors
+ * between them — Entrance (skylight), the Collection (horizontal
+ * gallery), and the Inquiry. /about and /guest live as their own
+ * dedicated pages, not as chapters here.
  */
 export default function Home() {
   return (
@@ -17,13 +16,9 @@ export default function Home() {
       <ChapterIndicator />
       <Hero />
       <Corridor />
-      <ArtistChapter />
-      <Corridor />
       <CollectionChapter />
       <Corridor />
       <InquiryChapter />
-      <Corridor />
-      <GuestChapter />
     </main>
   );
 }

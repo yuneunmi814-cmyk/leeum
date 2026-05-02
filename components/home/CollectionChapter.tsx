@@ -23,7 +23,7 @@ export default function CollectionChapter() {
       <div className="px-6 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-gallery">
           <div className="flex items-center gap-4 font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
-            <span>III.</span>
+            <span>II.</span>
             <span aria-hidden className="block h-px w-12 bg-concrete-300" />
             <span>Collection 01</span>
           </div>
