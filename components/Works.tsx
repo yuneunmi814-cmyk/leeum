@@ -54,7 +54,7 @@ export default function Works() {
           transition={{ duration: 1.0, delay: 0.3 }}
           className="mt-10 max-w-xl font-serif text-base leading-[1.85] text-concrete-700 text-balance sm:text-lg"
         >
-          두 개의 작품, 하나의 빛. 코드로 지어 올린 두 공간을 한 자리에 모았다.
+          세 개의 작품, 하나의 빛. 코드로 지어 올린 공간과 정책을 한 자리에 모았다.
         </motion.p>
       </div>
 

@@ -72,6 +72,12 @@ export type Work = {
     palette: [string, string, string];
   };
   layout: WorkLayout;
+  /**
+   * Marks the work as a concept / proposal piece rather than a shipped
+   * production site. The slider replaces the "PLATE N" footer with a
+   * "PROPOSAL · YYYY" label so it reads as a different category.
+   */
+  isProposal?: boolean;
 };
 
 export const works: Work[] = [
@@ -127,6 +133,33 @@ export const works: Work[] = [
       aspect: "aspect-[3/4]",
       offset: "md:mt-24",
       objectPosition: "30% center",
+    },
+  },
+  {
+    id: "campus-pass",
+    title: "Campus Pass",
+    titleKo: "제천 캠퍼스 라이프 패스",
+    year: "2026",
+    medium: "Policy Design · Civic UX",
+    thumbnail: "/works/campus-pass/thumb.jpg",
+    images: [
+      "/works/campus-pass/thumb.jpg",
+      "/works/campus-pass/hero.jpg",
+      "/works/campus-pass/detail-01.jpg",
+    ],
+    caption: "단일 카드로 다섯 영역을 통합하는 청년 정주 정책 제안.",
+    description:
+      "인구 12만 도시의 청년 정주 문제를 정책 디자인으로 풀어낸 작품. 단일 카드(C 패스)로 다섯 영역의 혜택을 통합하는 시민 UX 설계. 대원대학교 × 제천시 협업 모델 제안.",
+    tags: ["policy", "civic", "ux", "concept"],
+    isProposal: true,
+    links: {
+      live: "https://cpass.projectyoon.com",
+    },
+    placeholder: { shape: "grid", palette: ["#EFEAE0", "#C7BBA4", "#5A5247"] },
+    layout: {
+      span: 12,
+      aspect: "aspect-[16/10]",
+      offset: "md:mt-20",
     },
   },
 ];

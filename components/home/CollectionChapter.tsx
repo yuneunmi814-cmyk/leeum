@@ -37,7 +37,7 @@ export default function CollectionChapter() {
               빛이 머무는 공간
             </p>
             <p className="mt-10 max-w-xl font-serif text-base leading-[1.85] text-concrete-700 sm:text-lg">
-              두 개의 작품, 하나의 빛.
+              세 개의 작품, 하나의 빛.
             </p>
           </div>
         </div>
@@ -158,7 +158,8 @@ function Slider() {
 
 function SlideCard({ work, index }: { work: Work; index: number }) {
   const [imgSrc, setImgSrc] = useState(work.thumbnail);
-  // Per spec: Oculus → internal detail page; Lumi-re → external live site.
+  // Per spec: Oculus → internal detail page; everything else (Lumi-re,
+  // Campus Pass, future external pieces) → live site in a new tab.
   const isExternal = work.id !== "oculus";
   const href = isExternal
     ? work.links.live ?? `/works/${work.id}`
@@ -189,6 +190,14 @@ function SlideCard({ work, index }: { work: Work; index: number }) {
           className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-ink/10 transition-colors duration-500 group-hover/card:ring-ink/25"
           aria-hidden
         />
+        {work.isProposal && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-3 top-3 font-sans text-[11px] uppercase tracking-[0.18em] text-[#9B968E] opacity-100 transition-opacity duration-300 group-hover/card:opacity-0"
+          >
+            Proposal · {work.year}
+          </span>
+        )}
         <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 bg-ink/85 px-2.5 py-1 font-sans text-[10px] uppercase tracking-gallery text-canvas opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/card:opacity-100">
           <span>View</span>
           <span aria-hidden>↗</span>
@@ -197,7 +206,11 @@ function SlideCard({ work, index }: { work: Work; index: number }) {
       <div className="mt-4 font-sans text-[14px] uppercase tracking-[0.12em] text-ink sm:text-[16px]">
         {work.title.toUpperCase()}
         <span className="mx-2 text-concrete-400">·</span>
-        Plate {roman}, {work.year}
+        {work.isProposal ? (
+          <span className="text-concrete-500">Proposal, {work.year}</span>
+        ) : (
+          <>Plate {roman}, {work.year}</>
+        )}
       </div>
     </>
   );
