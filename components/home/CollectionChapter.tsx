@@ -43,7 +43,9 @@ export default function CollectionChapter() {
         </div>
       </div>
 
-      <Slider />
+      <div className="mx-auto max-w-gallery">
+        <Slider />
+      </div>
 
       <div className="px-6 sm:px-10 lg:px-16">
         <div className="mx-auto mt-16 max-w-gallery sm:mt-20">

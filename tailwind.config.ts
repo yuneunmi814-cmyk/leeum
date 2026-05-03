@@ -44,9 +44,12 @@ const config: Config = {
         },
       },
       fontFamily: {
+        // Cormorant carries Latin first (Noto Serif KR's Latin glyphs are
+        // workmanlike; Cormorant's italic + small caps read like a museum
+        // plate). Korean chars fall through to Noto Serif KR cleanly.
         serif: [
-          "var(--font-noto-serif-kr)",
           "var(--font-cormorant)",
+          "var(--font-noto-serif-kr)",
           "ui-serif",
           "Georgia",
           "serif",
