@@ -113,17 +113,18 @@ function Slider() {
     };
   }, []);
 
-  const onKey: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+  const scrollByStep = (dir: -1 | 1) => {
     const el = railRef.current;
     if (!el) return;
     const card = el.querySelector<HTMLElement>("[data-card]");
     const step = card ? card.getBoundingClientRect().width + 24 : 320;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  const onKey: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
     e.preventDefault();
-    el.scrollBy({
-      left: e.key === "ArrowRight" ? step : -step,
-      behavior: "smooth",
-    });
+    scrollByStep(e.key === "ArrowRight" ? 1 : -1);
   };
 
   return (
@@ -154,7 +155,52 @@ function Slider() {
           atEnd ? "opacity-0" : "opacity-100"
         }`}
       />
+
+      <div className="mt-10 hidden justify-center gap-6 md:flex">
+        <SliderButton
+          direction="prev"
+          onClick={() => scrollByStep(-1)}
+          disabled={atStart}
+        />
+        <SliderButton
+          direction="next"
+          onClick={() => scrollByStep(1)}
+          disabled={atEnd}
+        />
+      </div>
     </div>
+  );
+}
+
+function SliderButton({
+  direction,
+  onClick,
+  disabled,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+  disabled: boolean;
+}) {
+  const isPrev = direction === "prev";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={isPrev ? "이전 작품" : "다음 작품"}
+      className="group inline-flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-transparent text-ink/70 transition-all duration-300 ease-out hover:border-ink/40 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 disabled:cursor-default disabled:border-ink/10 disabled:text-ink/30"
+    >
+      <span
+        aria-hidden
+        className={`text-xl leading-none transition-transform duration-300 ease-out ${
+          isPrev
+            ? "group-hover:-translate-x-0.5 group-disabled:translate-x-0"
+            : "group-hover:translate-x-0.5 group-disabled:translate-x-0"
+        }`}
+      >
+        {isPrev ? "‹" : "›"}
+      </span>
+    </button>
   );
 }
 
