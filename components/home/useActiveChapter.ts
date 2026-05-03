@@ -40,9 +40,8 @@ export function useActiveChapter(ids: readonly string[]): string | null {
 /** Catalogue of home chapters — single source of truth. */
 export const HOME_CHAPTERS = [
   { id: "entrance", number: "I.", label: "Entrance" },
-  { id: "collection", number: "II.", label: "Studies" },
-  { id: "commissions", number: "III.", label: "Commissions" },
-  { id: "inquiry", number: "IV.", label: "The Inquiry" },
+  { id: "collection", number: "II.", label: "Collection 01" },
+  { id: "inquiry", number: "III.", label: "The Inquiry" },
 ] as const;
 
 export type ChapterId = (typeof HOME_CHAPTERS)[number]["id"];

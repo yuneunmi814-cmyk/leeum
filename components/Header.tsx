@@ -13,12 +13,13 @@ const links = [
   { anchor: "inquiry", href: "/inquiry", label: "Inquiry" },
 ] as const;
 
-// Anchors that actually live on the home page. About is a dedicated
-// route. Works link goes to /works (full grid), so its anchor stays
-// unused for chapter tracking — but we still track entrance / collection
-// (Studies) / commissions / inquiry as scroll chapters.
+// Anchors that actually live on the home page after the 3-chapter cut.
+// About + Guest are dedicated routes only — their links always navigate
+// to the route, never to a #anchor on /.
 const HOME_ANCHORS = new Set(["entrance", "collection", "inquiry"]);
-const HOME_ANCHOR_LIST = ["entrance", "collection", "commissions", "inquiry"];
+const HOME_ANCHOR_LIST = links
+  .filter((l) => HOME_ANCHORS.has(l.anchor))
+  .map((l) => l.anchor);
 
 export default function Header() {
   const { scrollYProgress } = useScroll();

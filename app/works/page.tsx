@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import Works from "@/components/Works";
 
 export const metadata: Metadata = {
-  title: "The Galleries",
+  title: "Collection 01",
   description:
-    "Where the Light Stays — 네 개의 작품, 두 개의 방. Studies(자체 실험)와 Commissions(의뢰)으로 나누어 걸어 둔 컬렉션.",
+    "Where the Light Stays · Collection 01 — 네 개의 작품, 하나의 빛. 코드로 지어 올린 공간·정책·앱을 한 자리에 모았다.",
   openGraph: {
-    title: "The Galleries · Project Yoon",
-    description:
-      "Where the Light Stays — 네 개의 작품, 두 개의 방. Studies × Commissions.",
+    title: "Collection 01 · Project Yoon",
+    description: "Where the Light Stays — 네 개의 작품, 하나의 빛.",
   },
 };
 
