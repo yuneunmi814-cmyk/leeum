@@ -13,13 +13,12 @@ const links = [
   { anchor: "inquiry", href: "/inquiry", label: "Inquiry" },
 ] as const;
 
-// Anchors that actually live on the home page after the 3-chapter cut.
-// About + Guest are dedicated routes only — their links always navigate
-// to the route, never to a #anchor on /.
+// Anchors that actually live on the home page. About is a dedicated
+// route. Works link goes to /works (full grid), so its anchor stays
+// unused for chapter tracking — but we still track entrance / collection
+// (Studies) / commissions / inquiry as scroll chapters.
 const HOME_ANCHORS = new Set(["entrance", "collection", "inquiry"]);
-const HOME_ANCHOR_LIST = links
-  .filter((l) => HOME_ANCHORS.has(l.anchor))
-  .map((l) => l.anchor);
+const HOME_ANCHOR_LIST = ["entrance", "collection", "commissions", "inquiry"];
 
 export default function Header() {
   const { scrollYProgress } = useScroll();
@@ -84,11 +83,8 @@ export default function Header() {
               aria-hidden
               className="hidden h-px w-6 bg-ink transition-[width] duration-500 group-hover:w-10 sm:block"
             />
-            <span className="font-serif text-base tracking-wide text-ink">
-              OCULUS
-            </span>
-            <span className="hidden font-sans text-[10px] uppercase tracking-gallery text-concrete-500 lg:inline">
-              · M1 Rotunda
+            <span className="font-serif text-base tracking-[0.18em] text-ink">
+              PROJECT YOON
             </span>
           </Link>
 

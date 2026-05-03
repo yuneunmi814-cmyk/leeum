@@ -7,7 +7,7 @@ import Chapter from "./Chapter";
 /** Home #inquiry — compressed lead from /inquiry plus the same CTA. */
 export default function InquiryChapter() {
   return (
-    <Chapter id="inquiry" number="III." title="The Inquiry">
+    <Chapter id="inquiry" number="IV." title="The Inquiry">
       <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
         문의
       </h2>

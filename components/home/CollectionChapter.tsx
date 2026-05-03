@@ -2,71 +2,147 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { works, type Work } from "@/data/works";
+import { worksById, type Work } from "@/data/works";
 
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
+type CollectionView = {
+  id: string;
+  /** Outer chapter number, e.g. "II." for the first room and "III." for the second */
+  number: string;
+  /** Eyebrow label — e.g. "Collection I · Studies" */
+  eyebrow: string;
+  /** English title displayed as the section headline */
+  title: string;
+  /** Korean subtitle below the title */
+  subtitleKo: string;
+  /** Curatorial framing line, body copy width */
+  caption: string;
+  /** Slugs in display order. Read against worksById. */
+  slugs: string[];
+  /** Whether to render the "전체 컬렉션 보기" footer link */
+  showAllLink?: boolean;
+  /** Make the second instance carry the home anchor #collection */
+  isPrimaryAnchor?: boolean;
+};
+
+const COLLECTIONS: CollectionView[] = [
+  {
+    id: "studies",
+    number: "II.",
+    eyebrow: "Collection I · Studies",
+    title: "Where the Light Stays",
+    subtitleKo: "빛이 머무는 공간",
+    caption:
+      "의뢰 없이 스스로에게 던진 질문에서 시작된 작업들. 윤은미라는 작은 실험실 안에서, 빛이 화면에 어떻게 머무는지 시험한 두 점.",
+    slugs: ["oculus", "lumi-re"],
+    isPrimaryAnchor: true,
+  },
+  {
+    id: "commissions",
+    number: "III.",
+    eyebrow: "Collection II · Commissions",
+    title: "When the Light Travels",
+    subtitleKo: "빛이 닿는 곳",
+    caption:
+      "외부의 요청과 제약 안에서 만들어진 작업들. 한 도시의 청년 정주, 그리고 반려묘 보호자의 마음 — 두 의뢰자의 결을 그대로 담은 두 점.",
+    slugs: ["campus-pass", "nyangtalk"],
+    showAllLink: true,
+  },
+];
+
 /**
- * Home #collection — "작품 둘러보기".
- *
- * Apple-style horizontal swipe slider: thumbnails only, snap-x mandatory,
- * native trackpad/touch gesture, mouse-wheel translated to horizontal,
- * arrow keys for keyboard nav, hidden scrollbar, edge fade masks that
- * hide themselves at the rail's start/end.
+ * Home — two collection rooms back to back. The first carries the
+ * #collection anchor so existing nav links still resolve.
  */
 export default function CollectionChapter() {
   return (
+    <>
+      {COLLECTIONS.map((c, i) => (
+        <CollectionRoom key={c.id} view={c} indexBase={collectionIndexBase(i)} />
+      ))}
+    </>
+  );
+}
+
+/** Roman numeral start index for each room — Studies starts at I, Commissions continues. */
+function collectionIndexBase(roomIndex: number): number {
+  let base = 0;
+  for (let i = 0; i < roomIndex; i++) base += COLLECTIONS[i].slugs.length;
+  return base;
+}
+
+function CollectionRoom({
+  view,
+  indexBase,
+}: {
+  view: CollectionView;
+  indexBase: number;
+}) {
+  const items = view.slugs
+    .map((slug) => worksById[slug])
+    .filter((w): w is Work => Boolean(w));
+
+  return (
     <section
-      id="collection"
+      id={view.isPrimaryAnchor ? "collection" : view.id}
       className="relative scroll-mt-20 py-24 sm:py-32 lg:py-40"
     >
       <div className="px-6 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-gallery">
           <div className="flex items-center gap-4 font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
-            <span>II.</span>
+            <span>{view.number}</span>
             <span aria-hidden className="block h-px w-12 bg-concrete-300" />
-            <span>Collection 01</span>
+            <span>{view.eyebrow}</span>
           </div>
 
           <div className="mt-12 sm:mt-16">
             <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Where the Light Stays
+              {view.title}
               <span className="text-concrete-300">.</span>
             </h2>
             <p className="mt-6 font-serif text-lg italic text-concrete-500 sm:text-xl">
-              빛이 머무는 공간
+              {view.subtitleKo}
             </p>
-            <p className="mt-10 max-w-xl font-serif text-base leading-[1.85] text-concrete-700 sm:text-lg">
-              네 개의 작품, 하나의 빛.
+            <p className="mt-10 max-w-xl font-serif text-base leading-[1.85] text-concrete-700 text-balance sm:text-lg">
+              {view.caption}
             </p>
           </div>
         </div>
       </div>
 
-      <Slider />
+      <Slider items={items} indexBase={indexBase} />
 
-      <div className="px-6 sm:px-10 lg:px-16">
-        <div className="mx-auto mt-16 max-w-gallery sm:mt-20">
-          <Link
-            href="/works"
-            data-cursor="view"
-            className="group inline-flex items-baseline gap-3 border-b border-ink/30 pb-1 font-sans text-xs uppercase tracking-gallery text-ink transition-colors hover:border-ink"
-          >
-            <span>전체 컬렉션 보기</span>
-            <span
-              aria-hidden
-              className="text-sm transition-transform duration-300 group-hover:translate-x-1"
+      {view.showAllLink && (
+        <div className="px-6 sm:px-10 lg:px-16">
+          <div className="mx-auto mt-16 max-w-gallery sm:mt-20">
+            <Link
+              href="/works"
+              data-cursor="view"
+              className="group inline-flex items-baseline gap-3 border-b border-ink/30 pb-1 font-sans text-xs uppercase tracking-gallery text-ink transition-colors hover:border-ink"
             >
-              ↗
-            </span>
-          </Link>
+              <span>전체 컬렉션 보기</span>
+              <span
+                aria-hidden
+                className="text-sm transition-transform duration-300 group-hover:translate-x-1"
+              >
+                ↗
+              </span>
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
 
-function Slider() {
+function Slider({
+  items,
+  indexBase,
+}: {
+  items: Work[];
+  indexBase: number;
+}) {
   const railRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -134,10 +210,9 @@ function Slider() {
         onKeyDown={onKey}
         className="no-scrollbar flex snap-x snap-mandatory items-start gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-4 pl-6 pr-12 sm:gap-6 sm:pl-10 sm:pr-16 lg:pl-16 lg:pr-24 focus-visible:outline-none"
       >
-        {works.map((work, i) => (
-          <SlideCard key={work.id} work={work} index={i} />
+        {items.map((work, i) => (
+          <SlideCard key={work.id} work={work} index={indexBase + i} />
         ))}
-        <EndPlaceholder />
       </div>
 
       <div
@@ -247,22 +322,3 @@ function SlideCard({ work, index }: { work: Work; index: number }) {
   );
 }
 
-function EndPlaceholder() {
-  return (
-    <div data-card className="flex shrink-0 snap-start flex-col" aria-hidden>
-      <div className="relative flex aspect-[4/3] w-[240px] items-center justify-center border border-dashed border-concrete-300 bg-canvas sm:w-[320px] lg:w-[380px]">
-        <div className="px-6 text-center">
-          <p className="font-sans text-[10px] uppercase tracking-gallery text-concrete-500">
-            Next Collection
-          </p>
-          <p className="mt-3 font-serif text-base italic text-concrete-700 sm:text-lg">
-            다음 작품을 기다려 주세요.
-          </p>
-        </div>
-      </div>
-      <div className="mt-4 font-sans text-[14px] uppercase tracking-[0.12em] text-concrete-400 sm:text-[16px]">
-        Coming Soon
-      </div>
-    </div>
-  );
-}

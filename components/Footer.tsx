@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const contact: Array<{ label: string; value: string; href: string }> = [
   { label: "Email", value: "yuneunmi814@gmail.com", href: "mailto:yuneunmi814@gmail.com" },
   {
@@ -160,24 +158,6 @@ export default function Footer() {
             </a>
           </div>
         </address>
-      </div>
-
-      {/* Bottom rule */}
-      <div className="mx-auto mt-10 max-w-gallery border-t border-concrete-200 pt-6">
-        <div className="flex flex-col gap-2 font-sans text-[10px] uppercase tracking-gallery text-concrete-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            Built with{" "}
-            <Link
-              href="https://claude.com/claude-code"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-concrete-700 transition-colors hover:text-ink"
-            >
-              Claude Code
-            </Link>
-          </span>
-          <span>v1.0.0</span>
-        </div>
       </div>
     </footer>
   );
