@@ -93,6 +93,12 @@ export type Work = {
    * "PROPOSAL · YYYY" label so it reads as a different category.
    */
   isProposal?: boolean;
+  /**
+   * When true, the gallery tile's overlay click opens `links.live` in a
+   * new tab instead of routing to /works/<id>. Used for entries whose
+   * canonical home is a separate live site rather than a detail page.
+   */
+  externalOnly?: boolean;
 };
 
 export const works: Work[] = [
@@ -220,18 +226,46 @@ export const works: Work[] = [
       offset: "md:mt-32",
     },
   },
+  {
+    id: "budaejjigae",
+    title: "Embassy of Budaejjigae",
+    titleKo: "부대찌개대사관",
+    year: "2026",
+    medium: "Brand Website · 기획·카피·디자인·퍼블리싱",
+    thumbnail: "/works/budaejjigae/01_home_hero.png",
+    images: ["/works/budaejjigae/01_home_hero.png"],
+    caption: "퍼주더니 興하더라 — 부대찌개 프랜차이즈 브랜드 사이트 디자인 시안.",
+    description:
+      "\"퍼주더니 興하더라\"라는 카피 한 줄에서 출발한 가상 부대찌개 프랜차이즈 브랜드 사이트. 일반 식당 홈페이지가 멈추는 지점 너머 — 손님 의사결정과 가맹 의사결정을 한 사이트에서 받도록 IA를 설계.",
+    tags: ["web", "brand", "concept"],
+    isProposal: true,
+    externalOnly: true,
+    links: {
+      live: "https://bgd.projectyoon.com",
+    },
+    placeholder: { shape: "slab", palette: ["#F4E6D2", "#C2452C", "#2A1A14"] },
+    layout: {
+      span: 5,
+      aspect: "aspect-[4/5]",
+      offset: "md:mt-12",
+    },
+  },
 ];
 
 export const worksById: Record<string, Work> = Object.fromEntries(
   works.map((w) => [w.id, w])
 );
 
-/** Returns the previous and next works in the array (wrapping at edges). */
+/**
+ * Returns the previous and next works in the array (wrapping at edges).
+ * Skips entries marked `externalOnly` since those have no detail page.
+ */
 export function getNeighbors(id: string): { prev: Work; next: Work } | null {
-  const i = works.findIndex((w) => w.id === id);
+  const navigable = works.filter((w) => !w.externalOnly);
+  const i = navigable.findIndex((w) => w.id === id);
   if (i === -1) return null;
-  const prev = works[(i - 1 + works.length) % works.length];
-  const next = works[(i + 1) % works.length];
+  const prev = navigable[(i - 1 + navigable.length) % navigable.length];
+  const next = navigable[(i + 1) % navigable.length];
   return { prev, next };
 }
 

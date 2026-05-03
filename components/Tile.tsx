@@ -123,12 +123,23 @@ export default function Tile({ work, index }: { work: Work; index: number }) {
         </div>
       </div>
 
-      <Link
-        href={`/works/${work.id}`}
-        data-cursor="view"
-        aria-label={`Open detail page for ${work.titleKo} (${work.title})`}
-        className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-      />
+      {work.externalOnly && work.links.live ? (
+        <a
+          href={work.links.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="view"
+          aria-label={`Open the live ${work.titleKo} (${work.title}) site in a new tab`}
+          className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+        />
+      ) : (
+        <Link
+          href={`/works/${work.id}`}
+          data-cursor="view"
+          aria-label={`Open detail page for ${work.titleKo} (${work.title})`}
+          className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+        />
+      )}
     </motion.div>
   );
 }
