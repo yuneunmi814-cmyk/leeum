@@ -115,21 +115,7 @@ export default function Intro() {
           transition={{ duration: 1.2, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
           className="lg:col-span-7 lg:pt-6"
         >
-          <p className="font-serif text-lg sm:text-xl leading-[1.85] text-concrete-800 text-balance">
-            저는 낮에는 연구자로 일합니다. 자료와 문장을 다루는 일이 본업이고,
-            그 시선의 결을 그대로 가지고 화면 앞에 앉습니다. 같은 한 사람의 손
-            안에 연구자·창작자·개발자가 함께 있는 작업실 — 이것이 이 공간의
-            출발점입니다.
-          </p>
-
-          <p className="mt-8 font-serif text-base sm:text-lg leading-[1.85] text-concrete-700 text-balance">
-            세 가지 시선이 한 사람 안에 있다는 것은, 한 화면이 만들어지는 동안
-            세 번 멈춰서 다시 묻는다는 뜻이기도 합니다. 의도가 옳은가, 형태가
-            그 의도를 닮았는가, 코드가 그 형태를 다치지 않게 옮기는가. 빠르게
-            만드는 대신 정성껏 시간을 들이는 일을 택한 이유입니다.
-          </p>
-
-          <p className="mt-8 font-serif italic text-base sm:text-lg leading-[1.85] text-concrete-500 text-balance">
+          <p className="font-serif italic text-lg sm:text-xl leading-[1.85] text-concrete-500 text-balance">
             “The room does not ask the visitor to look. It only asks them to stay.”
           </p>
 
