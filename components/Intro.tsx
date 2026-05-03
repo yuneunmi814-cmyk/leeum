@@ -59,9 +59,9 @@ export default function Intro() {
           transition={{ duration: 1.1, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
           className="mt-8 max-w-3xl font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.25] tracking-tight text-balance text-concrete-900"
         >
-          저는 정성껏 시간을 들이는 사람입니다.
+          머릿속에만 있던 것을 화면 위에 옮깁니다.
           <span className="block mt-2 text-concrete-500 italic font-light">
-            A practice of taking time, on purpose.
+            Where thought meets surface.
           </span>
         </motion.h2>
       </div>
