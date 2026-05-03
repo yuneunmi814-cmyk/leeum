@@ -93,12 +93,6 @@ export type Work = {
    * "PROPOSAL · YYYY" label so it reads as a different category.
    */
   isProposal?: boolean;
-  /**
-   * When true, the gallery tile's overlay click opens `links.live` in a
-   * new tab instead of routing to /works/<id>. Used for entries whose
-   * canonical home is a separate live site rather than a detail page.
-   */
-  externalOnly?: boolean;
 };
 
 export const works: Work[] = [
@@ -233,13 +227,23 @@ export const works: Work[] = [
     year: "2026",
     medium: "Brand Website · 기획·카피·디자인·퍼블리싱",
     thumbnail: "/works/budaejjigae/01_home_hero.png",
-    images: ["/works/budaejjigae/01_home_hero.png"],
+    images: [
+      "/works/budaejjigae/01_home_hero.png",
+      "/works/budaejjigae/02_home_explore.png",
+      "/works/budaejjigae/03_brand_story.png",
+      "/works/budaejjigae/04_brand_media.png",
+      "/works/budaejjigae/05_store_costs.png",
+      "/works/budaejjigae/06_menu_signature.png",
+      "/works/budaejjigae/07_menu_portion.png",
+      "/works/budaejjigae/08_stores_numbers.png",
+      "/works/budaejjigae/09_store_place.png",
+      "/works/budaejjigae/10_business_costs.png",
+    ],
     caption: "퍼주더니 興하더라 — 부대찌개 프랜차이즈 브랜드 사이트 디자인 시안.",
     description:
-      "\"퍼주더니 興하더라\"라는 카피 한 줄에서 출발한 가상 부대찌개 프랜차이즈 브랜드 사이트. 일반 식당 홈페이지가 멈추는 지점 너머 — 손님 의사결정과 가맹 의사결정을 한 사이트에서 받도록 IA를 설계.",
-    tags: ["web", "brand", "concept"],
+      "\"퍼주더니 興하더라\" — 한 줄의 카피에서 시작된 가상 부대찌개 프랜차이즈 브랜드 사이트.\n\n부대찌개라는 음식이 가진 '퍼주는 행위'가 곧 사업의 비밀이자 한국 식문화의 미학이라는 발견에서 출발했다. 가상의 브랜드를 진짜처럼 짓는 일 — 기획에서 카피, 디자인, 퍼블리싱까지 한 사람의 손으로 한 그릇의 음식이 한 채의 사이트가 되었다.",
+    tags: ["brand", "copy", "concept", "web"],
     isProposal: true,
-    externalOnly: true,
     links: {
       live: "https://bgd.projectyoon.com",
     },
@@ -256,16 +260,12 @@ export const worksById: Record<string, Work> = Object.fromEntries(
   works.map((w) => [w.id, w])
 );
 
-/**
- * Returns the previous and next works in the array (wrapping at edges).
- * Skips entries marked `externalOnly` since those have no detail page.
- */
+/** Returns the previous and next works in the array (wrapping at edges). */
 export function getNeighbors(id: string): { prev: Work; next: Work } | null {
-  const navigable = works.filter((w) => !w.externalOnly);
-  const i = navigable.findIndex((w) => w.id === id);
+  const i = works.findIndex((w) => w.id === id);
   if (i === -1) return null;
-  const prev = navigable[(i - 1 + navigable.length) % navigable.length];
-  const next = navigable[(i + 1) % navigable.length];
+  const prev = works[(i - 1 + works.length) % works.length];
+  const next = works[(i + 1) % works.length];
   return { prev, next };
 }
 

@@ -6,12 +6,12 @@ import DetailReveal from "./DetailReveal";
 import ResilientImage from "./ResilientImage";
 
 export function generateStaticParams() {
-  return works.filter((w) => !w.externalOnly).map((w) => ({ slug: w.id }));
+  return works.map((w) => ({ slug: w.id }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const work = worksById[params.slug];
-  if (!work || work.externalOnly) return { title: "Not Found — Oculus" };
+  if (!work) return { title: "Not Found — Oculus" };
   return {
     title: `${work.titleKo} — Oculus`,
     description: work.caption,
@@ -24,7 +24,7 @@ export default function WorkDetailPage({
   params: { slug: string };
 }) {
   const work = worksById[params.slug];
-  if (!work || work.externalOnly) notFound();
+  if (!work) notFound();
 
   const neighbors = getNeighbors(work.id)!;
   const { prev, next } = neighbors;
